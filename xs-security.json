@@ -1,0 +1,13 @@
+{
+    "xsappname": "personalization-api-consumer",
+    "tenant-mode": "dedicated",
+    "scopes": [],
+    "attributes": [],
+    "role-templates": [],
+    "authorities": [
+        "$ACCEPT_GRANTED_AUTHORITIES"
+    ],
+    "foreign-scope-references": [
+        "$XSAPPNAME(application,personalization-api).ExternalCalls"
+    ]
+}

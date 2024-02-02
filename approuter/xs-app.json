@@ -1,0 +1,17 @@
+{
+  "authenticationMethod": "route",
+  "routes": [
+    {
+      "source": "^/northwind/northwind.svc/(.*)$",
+      "csrfProtection": true,
+      "authenticationType": "none",
+      "destination": "northwind-api"
+    },
+    {
+      "source": "^/keyuser/(.*)$",
+      "authenticationType": "xsuaa",
+      "destination": "personalization-api"
+    }
+  ],
+  "welcomeFile": "/cftchsnpersapiconsumerui"
+}

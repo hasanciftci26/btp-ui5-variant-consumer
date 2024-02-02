@@ -1,0 +1,88 @@
+_schema-version: "3.2"
+ID: personalization-api-consumer
+description: Personalization API Consumer App
+version: 0.0.1
+modules:
+- name: personalization-api-consumer-router
+  type: approuter.nodejs
+  path: approuter
+  requires:
+  - name: personalization-api-consumer-repo-runtime
+  - name: personalization-api-consumer-auth
+  - name: personalization-api-consumer-dest
+    group: destinations
+    properties:
+      forwardAuthToken: true
+      name: personalization-api
+      url: https://itgdev-gfc-personalization-api-srv.cfapps.eu10.hana.ondemand.com
+  parameters:
+    disk-quota: 256M
+    memory: 256M
+- name: personalization-api-consumer-app-content
+  type: com.sap.application.content
+  path: .
+  requires:
+  - name: personalization-api-consumer-repo-host
+    parameters:
+      content-target: true
+  build-parameters:
+    build-result: resources
+    requires:
+    - artifacts:
+      - cftchsnpersapiconsumerui.zip
+      name: cftchsnpersapiconsumerui
+      target-path: resources/
+- name: cftchsnpersapiconsumerui
+  type: html5
+  path: pers-api-consumer-ui
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+resources:
+- name: personalization-api-consumer-auth
+  type: org.cloudfoundry.managed-service
+  parameters:
+    path: ./xs-security.json
+    service: xsuaa
+    service-plan: application
+- name: personalization-api-consumer-repo-runtime
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: html5-apps-repo
+    service-plan: app-runtime
+- name: personalization-api-consumer-dest
+  type: org.cloudfoundry.managed-service
+  parameters:
+    config:
+      HTML5Runtime_enabled: false
+      init_data:
+        instance:
+          destinations:
+          - Authentication: NoAuthentication
+            Name: ui5
+            ProxyType: Internet
+            Type: HTTP
+            URL: https://ui5.sap.com
+          existing_destinations_policy: update
+      version: 1.0.0
+    service: destination
+    service-name: personalization-api-consumer-dest
+    service-plan: lite
+- name: personalization-api-consumer-repo-host
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: html5-apps-repo
+    service-name: personalization-api-consumer-repo-host
+    service-plan: app-host
+parameters:
+  deploy_mode: html5-repo
+  enable-parallel-deployments: true
+build-parameters:
+  before-all:
+  - builder: custom
+    commands:
+    - npm install

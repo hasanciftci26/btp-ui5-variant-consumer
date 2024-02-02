@@ -1,0 +1,19 @@
+{
+    "name": "app-router",
+    "private": true,
+    "description": "App router",
+    "engines": {
+        "node": ">= 16.0.0"
+    },
+    "scripts": {
+        "start": "node node_modules/@sap/approuter/approuter.js",
+        "start-local": "node -r dotenv/config node_modules/@sap/html5-repo-mock/index.js --mockDir ../pers-api-consumer-ui"
+    },
+    "dependencies": {
+        "@sap/approuter": "^16"
+    },
+    "devDependencies": {
+        "@sap/html5-repo-mock": "^2.1.0",
+        "dotenv": "^16.4.1"
+    }
+}
