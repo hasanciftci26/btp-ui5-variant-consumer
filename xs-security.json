@@ -8,6 +8,8 @@
         "$ACCEPT_GRANTED_AUTHORITIES"
     ],
     "foreign-scope-references": [
-        "$XSAPPNAME(application,personalization-api).ExternalCalls"
+        "$XSAPPNAME(application,personalization-api).Admin",
+        "$XSAPPNAME(application,personalization-api).PublicViewManager",
+        "$XSAPPNAME(application,personalization-api).RegularUser"
     ]
 }
