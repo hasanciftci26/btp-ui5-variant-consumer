@@ -18,6 +18,10 @@ modules:
   parameters:
     disk-quota: 256M
     memory: 256M
+  build-parameters:
+    ignore:
+    - default-env.json
+    - .env    
 - name: personalization-api-consumer-app-content
   type: com.sap.application.content
   path: .
@@ -67,6 +71,11 @@ resources:
             ProxyType: Internet
             Type: HTTP
             URL: https://ui5.sap.com
+          - Authentication: NoAuthentication
+            Name: northwind-api
+            ProxyType: Internet
+            Type: HTTP            
+            URL: https://services.odata.org            
           existing_destinations_policy: update
       version: 1.0.0
     service: destination
